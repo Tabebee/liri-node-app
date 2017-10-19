@@ -94,18 +94,19 @@ function displayTweets() {
                     //  If there is no error, run a for loop to display each tweet separately and use
                     //  momentJS to convert from military time to regular
                     if (!err) {
+                        console.log("Here come their tweets!");
                         for (var i = 0; i < tweets.length; i++) {
                             // console.log( JSON.stringify(response) );
                             date = moment(tweets[i].created_at).format('MMMM Do YYYY, h:mm:ss a');
-                            console.log("Here come their tweets!");
                             console.log("On " + date + " @" + inquirerResponse.screenName + " tweeted: " + tweets[i].text);
-                            console.log("-----------------------------------------------------------");
+                            console.log("================================================================");
                         }
                     } else if (err) {
                         console.log("Please enter a valid twitter screen name exactly" + err);
                     }
                 })
             }
+
         })
 //    ******************************************************************************************************************
 }
@@ -128,21 +129,18 @@ function spotifyMe() {
             }
             if (!err) {
                 var dataItems = data.tracks.items;
-                // for (var i = 0; i < dataItems.length; i++) {
-                //     console.log()
-                // }
-                console.log(JSON.stringify(dataItems , null, 2));
+                // console.log(JSON.stringify(dataItems , null, 2));
+                console.log("Here are the top Two results from spotify");
                 for (var i = 0; i < dataItems.length;i++) {
                     var preview = dataItems[i].preview_url;
                     if (preview === null) {
                         preview = "Sorry Spotify does not have a oreview URL for this song title"
                     }
-                    console.log("Here are the top Two results from spotify");
                     console.log("Song Name: " + dataItems[i].name);
                     console.log("Artist: " + dataItems[i].artists[0].name);
                     console.log("Preview: " + preview);
                     console.log("Album Title: " + dataItems[i].album.name);
-                    console.log("----------------------------------------------------------------");
+                    console.log("================================================================");
                 }
             }
     });
@@ -184,18 +182,50 @@ function movieMe() {
     } else {
         MovieTitle = input2;
     }
+    console.log("Here's the info for the movie " + MovieTitle);
     //  Run our query thru OMDB with MovieTitle
-    // var queryURL = "http://www.omdbapi.com/?t=" + MovieTitle + "&y=&plot=short?&apikey=" + keys.omdb.API_key;
-    var queryURL = "http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=40e9cece";
-    request (queryURL, function(err, response, body) {
+    var queryURL = "http://www.omdbapi.com/?t=" + MovieTitle + "&y=&plot=short?&apikey=" + keys.omdb.API_key;
+    request(queryURL, function(err, response, body) {
+        if (err) {
+            console.log("Please Kindly enter a valid movie title");
+        }
+        //  Assign variables for data we want t print to console
+        var title = "Movie Title: " + JSON.parse(body).Title;
+        var year = "Year Release: " + JSON.parse(body).Year;
+        var imdbRating = "IMDB Rating: " + JSON.parse(body).Ratings[0].Value;
+        var rottenTomato = "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value;
+        var country = "Country Produced: " + JSON.parse(body).Country;
+        var language = "Language: " + JSON.parse(body).Language;
+        var plot = "Plot: " + JSON.parse(body).Plot;
+        var actors = "Actors: " + JSON.parse(body).Actors;
+        //  Connect all variable into an array to sort thru and log more efficiently
+        var movieInfo = [title, year, imdbRating, rottenTomato, country, language, plot, actors];
+
         if (!err && response.statusCode === 200) {
-            console.log(JSON.parse(body));
-            console.log("----------------------------------------");
-            console.log(response);
+            //  Use forEach to go thru array and log movie info
+            movieInfo.forEach(function(variable) {
+                console.log(variable);
+            });
+            console.log("================================================================");
+            // console.log(response);
         }
     })
 }
 
 function doThis() {
-
+    console.log("Now Reading text inside file 'random.txt'");
+    //  run 'readFile' and store into varible 'data'
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        if (err) {
+            console.log("Whoops look like we ran into and error: " + err);
+        }
+        var text = data.split(",");
+        // console.log(text);
+        input = text[0];
+        input2 = text[1];
+        for (var i = 4; i < allInput.length; i++) {
+            input2 += "+" + allInput[i];
+        }
+        spotifyMe();
+    })
 }

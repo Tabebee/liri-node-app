@@ -1,5 +1,5 @@
-console.log('this is loaded');
-
+// console.log('this is loaded');
+console.log("===================================================================");
 var twitterKeys = {
     //  twitter Keys
     consumer_key: '5t6XsJppRXu11freBDMH2YuYd',
@@ -24,9 +24,3 @@ var allKeys = {
 };
 
 module.exports = allKeys;
-// module.exports = spotifyKeys;
-// module.exports = omdbKey;
-// var tw = {
-//     twiterkeys: twitterKeys
-// };
-
