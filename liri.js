@@ -31,18 +31,46 @@ if (!input) {
 //  Setup switch case from input
 switch (input) {
     case "my-tweets":
+        //  BONUS HERE *********************************************************************************
+        fs.appendFile("log.txt", "Log Entry"+ "\n", function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+        //  Bonus End***********************************************************************************
         displayTweets();
         break;
 
     case "spotify-this-song":
+        //  BONUS HERE *********************************************************************************
+        fs.appendFile("log.txt", "Log Entry"+ "\n", function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+        //  Bonus End***********************************************************************************
         spotifyMe();
         break;
 
     case "movie-this":
+        //  BONUS HERE *********************************************************************************
+        fs.appendFile("log.txt", "Log Entry"+ "\n", function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+        //  Bonus End***********************************************************************************
         movieMe();
         break;
 
     case "do-what-it-says":
+        //  BONUS HERE *********************************************************************************
+        fs.appendFile("log.txt", "Log Entry"+ "\n", function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+        //  Bonus End***********************************************************************************
         doThis();
         break;
 }
@@ -97,10 +125,32 @@ function displayTweets() {
                         console.log("Here come their tweets!");
                         for (var i = 0; i < tweets.length; i++) {
                             // console.log( JSON.stringify(response) );
-                            date = moment(tweets[i].created_at).format('MMMM Do YYYY, h:mm:ss a');
-                            console.log("On " + date + " @" + inquirerResponse.screenName + " tweeted: " + tweets[i].text);
+                            var date = moment(tweets[i].created_at).format('MMMM Do YYYY, h:mm:ss a');
+                            var displayTweets = "On " + date + " @" + inquirerResponse.screenName + " tweeted: " + tweets[i].text;
+                            console.log(displayTweets);
                             console.log("================================================================");
+
+                            //    BONUS HERE ***************************************************************************
+                            //    still inside the for loop
+                            fs.appendFile("log.txt", input + displayTweets + "\n", function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
+                            fs.appendFile("log.txt", "================================================================" + "\n", function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
+                            //  BONUS End ******************************************************************************
                         }
+                            //  BONUS **********************************************************************************
+                            fs.appendFile("log.txt", "Log Entry End"+ "\n", function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
+                            // BONUS END *******************************************************************************
                     } else if (err) {
                         console.log("Please enter a valid twitter screen name exactly" + err);
                     }
@@ -113,7 +163,7 @@ function displayTweets() {
 
 function spotifyMe() {
     //****************** Very Basic what was asked *********************************************************************
-    if (input2 === undefined) {
+    if (!input2) {
         song = "The Sign";
     } else {
         song = input2;
@@ -132,15 +182,43 @@ function spotifyMe() {
                 // console.log(JSON.stringify(dataItems , null, 2));
                 console.log("Here are the top Two results from spotify");
                 for (var i = 0; i < dataItems.length;i++) {
-                    var preview = dataItems[i].preview_url;
+                    //  declare variables for inforamtion needed
+                    var songName = "Song Name: " + dataItems[i].name;
+                    var artistName = "Artist: " + dataItems[i].artists[0].name;
+                    var preview = "Preview: " + dataItems[i].preview_url;
+                    var albumName = "Album Title: " + dataItems[i].album.name;
                     if (preview === null) {
                         preview = "Sorry Spotify does not have a oreview URL for this song title"
                     }
-                    console.log("Song Name: " + dataItems[i].name);
-                    console.log("Artist: " + dataItems[i].artists[0].name);
-                    console.log("Preview: " + preview);
-                    console.log("Album Title: " + dataItems[i].album.name);
+                    console.log(songName);
+                    console.log(artistName);
+                    console.log(preview);
+                    console.log(albumName);
                     console.log("================================================================");
+
+                    //        BONUS HERE *******************************************************************************
+                    //    still inside the for loop
+                    // fs.appendFile("log.txt", "Log Entry"+ "\n", function (err) {
+                    //     if (err) {
+                    //         console.log(err);
+                    //     }
+                    // });
+                    fs.appendFile("log.txt", songName + "\n" + artistName + "\n" + preview + "\n" + albumName + "\n", function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                    fs.appendFile("log.txt", "Log Entry End"+ "\n", function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                    fs.appendFile("log.txt", "================================================================" + "\n", function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                    //  BONUS Part End *********************************************************************************
                 }
             }
     });
@@ -208,6 +286,27 @@ function movieMe() {
             });
             console.log("================================================================");
             // console.log(response);
+
+            //        BONUS HERE *******************************************************************************
+            //    still inside the for loop
+            fs.appendFile("log.txt", title + "\n" + year + "\n" + imdbRating + "\n" + rottenTomato + "\n" + country + "\n"
+                                           + language + "\n" + plot + "\n" + actors + "\n", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            fs.appendFile("log.txt", "Log Entry End"+ "\n", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            fs.appendFile("log.txt", "=======================================================" + "\n", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            //  BONUS Part End *********************************************************************************
+
         }
     })
 }
@@ -219,6 +318,7 @@ function doThis() {
         if (err) {
             console.log("Whoops look like we ran into and error: " + err);
         }
+        //  split the variable and make it an array so we can use them individually
         var text = data.split(",");
         // console.log(text);
         input = text[0];
@@ -226,6 +326,33 @@ function doThis() {
         for (var i = 4; i < allInput.length; i++) {
             input2 += "+" + allInput[i];
         }
+        //  run the spotify function with inputs from above
         spotifyMe();
     })
 }
+
+
+
+// //        BONUS HERE *******************************************************************************
+// //    still inside the for loop
+// fs.appendFile("log.txt", "Log Entry"+ "\n", function (err) {
+//     if (err) {
+//         console.log(err);
+//     }
+// });
+// fs.appendFile("log.txt", input + song + "\n", function (err) {
+//     if (err) {
+//         console.log(err);
+//     }
+// });
+// fs.appendFile("log.txt", "Log Entry End"+ "\n", function (err) {
+//     if (err) {
+//         console.log(err);
+//     }
+// });
+// fs.appendFile("log.txt", "================================================================" + "\n", function (err) {
+//     if (err) {
+//         console.log(err);
+//     }
+// });
+// //  BONUS Part End *********************************************************************************
