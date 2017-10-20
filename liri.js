@@ -7,6 +7,7 @@ var Spotify = require("node-spotify-api");
 var request = require("request");
 var inquirer = require("inquirer");
 var moment = require("moment");
+var colors = require("colors");
 //  declare variables for user input and incorporate spaces as + for spotify and movie
 var input = process.argv[2];
 var input2 = process.argv[3];
@@ -20,11 +21,11 @@ var song;
 var MovieTitle;
 //  display this IF no commands are requested
 if (!input) {
-    console.log("Please choose from one of the following commands");
-    console.log("node liri.js my-tweets");
-    console.log("node liri.js spotify-this-'song song_name_here'");
-    console.log("node liri.js movie-this 'movie_name_here'");
-    console.log("node liri.js 'do-what-it-says'");
+    console.log("Please choose from one of the following commands".bold);
+    console.log("node liri.js my-tweets".bold);
+    console.log("node liri.js spotify-this-'song song_name_here'".bold);
+    console.log("node liri.js movie-this 'movie_name_here'".bold);
+    console.log("node liri.js 'do-what-it-says'".bold);
 }
 // console.log(keys.consumer_key);
 
@@ -127,7 +128,8 @@ function displayTweets() {
                             // console.log( JSON.stringify(response) );
                             var date = moment(tweets[i].created_at).format('MMMM Do YYYY, h:mm:ss a');
                             var displayTweets = "On " + date + " @" + inquirerResponse.screenName + " tweeted: " + tweets[i].text;
-                            console.log(displayTweets);
+
+                            console.log("On " + date.magenta + " @" + inquirerResponse.screenName.blue + " tweeted: " + tweets[i].text.bold);
                             console.log("================================================================");
 
                             //    BONUS HERE ***************************************************************************
@@ -164,7 +166,7 @@ function displayTweets() {
 function spotifyMe() {
     //****************** Very Basic what was asked *********************************************************************
     if (!input2) {
-        song = "The Sign";
+        song = 'the sign';
     } else {
         song = input2;
     }
@@ -190,10 +192,10 @@ function spotifyMe() {
                     if (preview === null) {
                         preview = "Sorry Spotify does not have a oreview URL for this song title"
                     }
-                    console.log(songName);
-                    console.log(artistName);
-                    console.log(preview);
-                    console.log(albumName);
+                    console.log("Song Name: ".bold + dataItems[i].name.green.bold);
+                    console.log("Artist: ".bold + dataItems[i].artists[0].name.green.bold);
+                    console.log("Preview: ".bold + dataItems[i].preview_url.green.bold);
+                    console.log("Album Title: ".bold + dataItems[i].album.name.green.bold);
                     console.log("================================================================");
 
                     //        BONUS HERE *******************************************************************************
@@ -268,14 +270,14 @@ function movieMe() {
             console.log("Please Kindly enter a valid movie title");
         }
         //  Assign variables for data we want t print to console
-        var title = "Movie Title: " + JSON.parse(body).Title;
-        var year = "Year Release: " + JSON.parse(body).Year;
-        var imdbRating = "IMDB Rating: " + JSON.parse(body).Ratings[0].Value;
-        var rottenTomato = "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value;
-        var country = "Country Produced: " + JSON.parse(body).Country;
-        var language = "Language: " + JSON.parse(body).Language;
-        var plot = "Plot: " + JSON.parse(body).Plot;
-        var actors = "Actors: " + JSON.parse(body).Actors;
+        var title = "Movie Title: ".bold + JSON.parse(body).Title.blue.bold;
+        var year = "Year Release: ".bold + JSON.parse(body).Year.blue.bold;
+        var imdbRating = "IMDB Rating: ".bold + JSON.parse(body).Ratings[0].Value.blue.bold;
+        var rottenTomato = "Rotten Tomatoes Rating: ".bold + JSON.parse(body).Ratings[1].Value.blue.bold;
+        var country = "Country Produced: ".bold + JSON.parse(body).Country.blue.bold;
+        var language = "Language: ".bold + JSON.parse(body).Language.blue.bold;
+        var plot = "Plot: ".bold + JSON.parse(body).Plot.blue.bold;
+        var actors = "Actors: ".bold + JSON.parse(body).Actors.blue.bold;
         //  Connect all variable into an array to sort thru and log more efficiently
         var movieInfo = [title, year, imdbRating, rottenTomato, country, language, plot, actors];
 
@@ -331,28 +333,3 @@ function doThis() {
     })
 }
 
-
-
-// //        BONUS HERE *******************************************************************************
-// //    still inside the for loop
-// fs.appendFile("log.txt", "Log Entry"+ "\n", function (err) {
-//     if (err) {
-//         console.log(err);
-//     }
-// });
-// fs.appendFile("log.txt", input + song + "\n", function (err) {
-//     if (err) {
-//         console.log(err);
-//     }
-// });
-// fs.appendFile("log.txt", "Log Entry End"+ "\n", function (err) {
-//     if (err) {
-//         console.log(err);
-//     }
-// });
-// fs.appendFile("log.txt", "================================================================" + "\n", function (err) {
-//     if (err) {
-//         console.log(err);
-//     }
-// });
-// //  BONUS Part End *********************************************************************************
