@@ -192,9 +192,10 @@ function spotifyMe() {
                     if (preview === null) {
                         preview = "Sorry Spotify does not have a oreview URL for this song title"
                     }
+
                     console.log("Song Name: ".bold + dataItems[i].name.green.bold);
                     console.log("Artist: ".bold + dataItems[i].artists[0].name.green.bold);
-                    console.log("Preview: ".bold + dataItems[i].preview_url.green.bold);
+                    // console.log("Preview: ".bold + dataItems[i].preview_url.green.bold);
                     console.log("Album Title: ".bold + dataItems[i].album.name.green.bold);
                     console.log("================================================================");
 
